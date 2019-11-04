@@ -27,8 +27,7 @@ toc
 tic
 % original sigma and the number of actave can be modified. the larger
 % sigma0, the more quickly-smooth images
-%sigma0=sqrt(2) - default
-sigma0=sqrt(4);
+sigma0=sqrt(2);
 octave=3;%6*sigma*k^(octave*level)<=min(m,n)/(2^(octave-2))
 level=3;
 D=cell(1,octave);
@@ -198,7 +197,7 @@ toc
 
 
 
-
+return
 %% Orientation Assignment(Multiple orientations assignment)
 tic
 kpori=zeros(1,36*extr_volume);
@@ -270,7 +269,7 @@ idx= kpori==0;
 kpori(idx)=[];
 extr_volume=length(extrema)/4;
 toc
-
+return
 %% keypoint descriptor
 tic
 d=4;% In David G. Lowe experiment,divide the area into 4*4.

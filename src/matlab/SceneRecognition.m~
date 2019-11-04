@@ -5,8 +5,8 @@
 
 %lets test sift
 
-function W=SceneRecognition(dataT);
-data = dataT';
+function K=SceneRecognition(data);
+
 options=make_options;
 %options.NN=NN;
 options.Kernel='rbf';
@@ -17,18 +17,14 @@ options.GraphWeights='heat';
 %options.GraphWeightParam=SIGMA;
 %options.LaplacianDegree=DEGREE;
 options.PointCloud = data;
-M = lle(dataT,5,128);
-I=eye(size(M')); 
-M = (I-M')*(I-M')';
+M = lle(data,5,128);
+I=eye(size(M)); 
+M = (I-M)*(I-M)';
 %what i thought it was
 % I=eye(size(M')); 
 % M = (I-M')*(I-M')';
 options.DeformationMatrix = M;
 
 K=calckernel(options,data);
-
-%need to loop this eventually properly
-W = ones(size(K,1));
-W = (K.\(K.*W +0.1*W+(0.1/4)*(W.^(1/2)))).*W;
 
 % the deformed kernel matrix evaluated over test data
