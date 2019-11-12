@@ -65,7 +65,7 @@ function  varargout = eigs(varargin)
 %      n = size(A,1);  opts.issym = 1;
 %      d2 = eigs(@(x)dnRk(x,'C',15),n,5,'SM',opts);
 %
-%   See also EIG, SVDS, ARPACKC, FUNCTION_HANDLE.
+%   See also EIG, SVDS, 	, FUNCTION_HANDLE.
 
 %   Copyright 1984-2008 The MathWorks, Inc.
 %   $Revision: 1.45.4.11 $  $Date: 2008/12/01 07:19:19 $
@@ -91,6 +91,8 @@ else
     intconvert = @(arraytoconvert) int32(arraytoconvert);
     inttype = 'int32';
 end
+
+scaleB = 1;
 
 % Error check inputs and derive some information from them
 [A,Amatrix,isrealprob,issymA,n,B,classAB,k,eigs_sigma,whch, ...

@@ -1,0 +1,72 @@
+%img_path = '../../../src/datasets/15CategoryDataSet/trainingSet/00/1.jpg'
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/1.jpg';
+feature = SIFT_feature(img_path);
+dataT = feature;
+training_label=ones(1,size(feature,2));
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/2.jpg';
+feature = SIFT_feature(img_path);
+dataT = [dataT feature];
+%tmp = 2*ones(1,size(feature,2));
+%size(tmp)
+training_label = [training_label ones(1,size(feature,2))]; 
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/3.jpg';
+feature = SIFT_feature(img_path);
+dataT = [dataT feature];
+training_label = [training_label ones(1,size(feature,2))]; 
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/4.jpg';
+feature = SIFT_feature(img_path);
+dataT = [dataT feature];
+training_label = [training_label ones(1,size(feature,2))]; 
+
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/217.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 2.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/218.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 2.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/219.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 2.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/220.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 2.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/458.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 3.*ones(1,size(feature,2))];
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/459.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 3.*ones(1,size(feature,2))];
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/460.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 3.*ones(1,size(feature,2))];
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/461.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 3.*ones(1,size(feature,2))];
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/769.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 4.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/770.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 4.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/771.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 4.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/772.jpg';
+feature = SIFT_feature(img_path);
+training_label = [training_label 4.*ones(1,size(feature,2))]; 
+dataT = [dataT feature];
+
+
+save('15SceneCategoryLarge','dataT','training_label');

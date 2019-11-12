@@ -109,11 +109,11 @@ if ~isfield(options,'PointCloud')
     
 else % we intend to deform our kernel
      % this code can be speeded up later
-    disp('in correct else');    
+    
     opt.Kernel=options.Kernel;
     opt.KernelParam=options.KernelParam;
     X=options.PointCloud;
-    G=calckernel(opt,X);
+    G=lle(X,2,128);
     if isfield(options,'DeformationMatrix')
     	 M=options.DeformationMatrix;
     else % use the laplacian
@@ -133,7 +133,7 @@ else % we intend to deform our kernel
            B=A;
            K1=calckernel(opt,X1);
         end
-        disp('Deforming the Kernel - correctly');	     
+        disp('Deforming the Kernel');	     
      
       
         K=(K1 - B'*((I+M*G)\M)*A);

@@ -1,6 +1,6 @@
 function [Eigenvectors,Eigenvalues] = ncut(W,nbEigenValues,dataNcut);
 % function [Eigenvectors,Eigenvalues] = ncut(W,nbEigenValues,dataNcut);
-% 
+%
 % Input:
 %     W= symmetric similarity matrix
 %     nbEigenValues=  number of Ncut eigenvectors computed
@@ -12,8 +12,8 @@ function [Eigenvectors,Eigenvalues] = ncut(W,nbEigenValues,dataNcut);
 %     dataNcut.maxiterations = 100; max number of iterations in eigensolver
 %     dataNcut.eigsErrorTolerance = 1e-6; error tolerance in eigensolver
 %     dataNcut.valeurMin=1e-6; % truncates any values in W less than valeurMin
-% 
-% Output: 
+%
+% Output:
 %    Eigenvectors= continuouse Ncut eigenvectos, size = length(W) x nbEigenValues
 %    Eigenvalues= Ncut eigenvalues, size = 1x nbEigenValues
 %
@@ -41,7 +41,7 @@ end
 W = sparsifyc(W,dataNcut.valeurMin);
 
 % check for matrix symmetry
-if max(max(abs(W-W'))) > 1e-10 %voir (-12) 
+if max(max(abs(W-W'))) > 1e-10 %voir (-12)
     %disp(max(max(abs(W-W'))));
     error('W not symmetric');
 end
@@ -63,11 +63,11 @@ P = spmtimesd(W,Dinvsqrt,Dinvsqrt);
 clear W;
 
 options.issym = 1;
-     
+
 if dataNcut.verbose
-    options.disp = 3; 
+    options.disp = 3;
 else
-    options.disp = 0; 
+    options.disp = 0;
 end
 options.maxit = dataNcut.maxiterations;
 options.tol = dataNcut.eigsErrorTolerance;
@@ -77,12 +77,12 @@ options.p = max(35,2*nbEigenValues); %voir
 options.p = min(options.p,n);
 
 %warning off
-% [vbar,s,convergence] = eigs2(@mex_w_times_x_symmetric,size(P,1),nbEigenValues,'LA',options,tril(P)); 
-[vbar,s,convergence] = eigs_new(@mex_w_times_x_symmetric,size(P,1),nbEigenValues,'LA',options,tril(P)); 
+% [vbar,s,convergence] = eigs2(@mex_w_times_x_symmetric,size(P,1),nbEigenValues,'LA',options,tril(P));
+[vbar,s,convergence] = eigs(@mex_w_times_x_symmetric,size(P,1),nbEigenValues,'LA',options,tril(P));
 %warning on
 
 s = real(diag(s));
-[x,y] = sort(-s); 
+[x,y] = sort(-s);
 Eigenvalues = -x;
 vbar = vbar(:,y);
 Eigenvectors = spdiags(Dinvsqrt,0,n,n) * vbar;
