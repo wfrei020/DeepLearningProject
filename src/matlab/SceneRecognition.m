@@ -5,8 +5,10 @@
 
 %lets test sift
 
-function Y=SceneRecognition();
-load('15SceneCategoryLarge','dataT','training_label');
+function Y=SceneRecognition(dataT);
+if ~exist('dataT','var')
+    load('15SceneCategoryTest','dataT','training_label');
+end
 data = dataT';
 layers = 1;
 if(0)

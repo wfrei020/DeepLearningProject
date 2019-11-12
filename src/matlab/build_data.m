@@ -2,7 +2,9 @@
 img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/1.jpg';
 feature = SIFT_feature(img_path);
 dataT = feature;
+
 training_label=ones(1,size(feature,2));
+if(0)
 img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/2.jpg';
 feature = SIFT_feature(img_path);
 dataT = [dataT feature];
@@ -67,6 +69,7 @@ img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/772.
 feature = SIFT_feature(img_path);
 training_label = [training_label 4.*ones(1,size(feature,2))]; 
 dataT = [dataT feature];
+end
+size(dataT)
 
-
-save('15SceneCategoryLarge','dataT','training_label');
+save('15SceneCategoryTest','dataT','training_label');

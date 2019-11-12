@@ -29,7 +29,7 @@ tic
 % original sigma and the number of actave can be modified. the larger
 % sigma0, the more quickly-smooth images
 %sigma0=sqrt(2) - default
-sigma0=sqrt(4);
+sigma0=sqrt(16);
 octave=3;%6*sigma*k^(octave*level)<=min(m,n)/(2^(octave-2))
 level=3;
 D=cell(1,octave);
@@ -190,11 +190,11 @@ x=floor((extrema(3:4:end)-1)./(n./(2.^(extrema(1:4:end)-2))))+1;
 y=mod((extrema(3:4:end)-1),m./(2.^(extrema(1:4:end)-2)))+1;
 ry=y./2.^(octave-1-extrema(1:4:end));
 rx=x./2.^(octave-1-extrema(1:4:end));
-%figure(2)
-%subplot(2,2,4);
-%imshow(origin)
-%hold on
-%plot(ry,rx,'b+');
+figure(2)
+subplot(2,2,4);
+imshow(origin)
+hold on
+plot(ry,rx,'b+');
 toc
 
 
@@ -275,7 +275,7 @@ toc
 %% keypoint descriptor
 tic
 d=4;% In David G. Lowe experiment,divide the area into 4*4.
-pixel=4;
+pixel=9;
 feature=zeros(d*d*8,extr_volume);
 for i=1:extr_volume
     descriptor=zeros(1,d*d*8);% feature dimension is 128=4*4*8;

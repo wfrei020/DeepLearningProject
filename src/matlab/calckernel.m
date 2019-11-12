@@ -130,6 +130,7 @@ else % we intend to deform our kernel
            B=calckernel(opt,X2,X); %n x n2
 	           K1=calckernel(opt,X1,X2); % n2 x n1
         else
+            disp('good');
            B=A;
            K1=calckernel(opt,X1);
         end

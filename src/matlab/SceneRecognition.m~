@@ -5,60 +5,9 @@
 
 %lets test sift
 
-function Y=SceneRecognition();
-%img_path = '../../../src/datasets/15CategoryDataSet/trainingSet/00/1.jpg'
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/1.jpg';
-feature = SIFT_feature(img_path);
-dataT = feature;
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/2.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/3.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/00/4.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-if(0)
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/217.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/218.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/219.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/01/220.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/458.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/459.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/460.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/461.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/769.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/770.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/771.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/772.jpg';
-feature = SIFT_feature(img_path);
-dataT = [dataT feature];
-end
+function Y=SceneRecognition(data);
+if ~exist('X1','var')
+load('15SceneCategoryTest','dataT','training_label');
 data = dataT';
 layers = 1;
 if(0)
@@ -79,7 +28,7 @@ size(data)
 
 options=make_options;
 %options.NN=NN;
-options.Kernel='rbf';
+options.Kernel='linear';
 %options.KernelParam=SIGMA;
 %options.gamma_A=gamma_A; 
 %options.gamma_I=gamma_I; 
@@ -87,10 +36,6 @@ options.GraphWeights='heat';
 %options.GraphWeightParam=SIGMA;
 %options.LaplacianDegree=DEGREE;
 options.PointCloud = data;
-dataT(1)
-dataT(2)
-dataT(3)
-dataT(4)
 
 M = lle(dataT,5,128);
 %already done
@@ -104,25 +49,46 @@ options.DeformationMatrix = M;
 K=calckernel(options,data);
 %I believe up until this part it is correct
 %need to loop this eventually properly
-
-W = (K./(K.*W +0.1*W+(0.1/4)*(W.^(1/2)))).*W;
+disp('size of k');
+size(K)
+W = (K./(K.*W +0.1.*W+(0.1/4).*(W.^(1/2)))).*W;
+disp('size of W');
+size(W)
 D = eye(size(W)).*((1/2)*(W+W'));
 WT = 1/2*(W+W')*(D^(-1));
-WT
 %WT
 %D^(-1)
 
-size(WT)
-
+% WT is nxn
+%data is n x d
+%D in n x n
+% G is n x d
+%gmin is d x d
 %G = WT;
 %WT
-return
-G = compute_relation(data');
-%G = compute_relation(dataT);
-nbCluster = 4;
-[NcutDiscrete,NcutEigenvectors,NcutEigenvalues] = ncutW(G,nbCluster);
+%G = D^(1/2)*data;
+disp('size of G');
 
+%Gmin = G'*((eye(size(WT,1)) - WT)^2)*G;
+%Gmin*Gmin'
+
+disp('size of G min');
+%size(Gmin)
+%return
+Gsym = compute_relation(WT);
+disp('size of G sym');
+size(Gsym)
+%G = compute_relation(dataT);
+nbCluster = 128;
+[NcutDiscrete,NcutEigenvectors,NcutEigenvalues] = ncutW(Gsym,nbCluster);
+disp('size of  discrete');
+size(NcutDiscrete)
+disp('size of  vectorr');
 size(NcutEigenvectors)
+disp('size of  vals');
+size(NcutEigenvalues)
+disp('size of  D');
+size(D)
 disp(['The computation took ' num2str(toc) ' seconds']);
 
  Y = NcutEigenvectors'*inv(D^(1/2));
