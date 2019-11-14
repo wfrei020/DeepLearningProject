@@ -8,8 +8,10 @@
 function Y=SceneRecognition(dataT);
 if ~exist('dataT','var')
     load('15SceneCategoryTest','dataT','training_label');
+   
 end
 data = dataT';
+
 layers = 1;
 if(0)
 x = 1:size(data,1);
@@ -76,7 +78,8 @@ disp('size of G');
 disp('size of G min');
 %size(Gmin)
 %return
-Gsym = compute_relation(WT);
+%Gsym = compute_relation(WT);
+Gsym = compute_relation(eye(size(WT,1)) - WT);
 disp('size of G sym');
 size(Gsym)
 %G = compute_relation(dataT);
@@ -107,6 +110,9 @@ scatter(x,y)
 
 data = Y';
 end
+
+%save('weightData','Y','training_label');
+
  % figure(1);
 %plot(Y);
 return

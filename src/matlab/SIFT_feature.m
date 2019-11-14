@@ -8,7 +8,7 @@ function feature = SIFT_feature(img_path)
 % contact with Xing Di, Stevens Institution of Technology. xdi2@stevens.edu
 
 %%initial image
-tic
+%tic
 
 clc;
 row=256;
@@ -23,9 +23,9 @@ end
 img=im2double(img);
 origin=img;
 % img=medfilt2(img);
-toc
+%toc
 %% Scale-Space Extrema Detection
-tic
+%tic
 % original sigma and the number of actave can be modified. the larger
 % sigma0, the more quickly-smooth images
 %sigma0=sqrt(2) - default
@@ -73,10 +73,10 @@ for i=1:octave
     temp_img=temp_img(1:2:end,1:2:end);
     temp_img=padarray(temp_img,[1,1],'both','replicate');
 end
-toc
+%toc
 %% Keypoint Localistaion
 % search each pixel in the DoG map to find the extreme point
-tic
+%tic
 interval=level-1;
 number=0;
 for i=2:octave+1
@@ -112,7 +112,7 @@ for i=1:octave
 end
 idx= extrema==0;
 extrema(idx)=[];
-toc
+%toc
 [m,n]=size(img);
 x=floor((extrema(3:4:end)-1)./(n./(2.^(extrema(1:4:end)-2))))+1;
 y=mod((extrema(3:4:end)-1),m./(2.^(extrema(1:4:end)-2)))+1;
@@ -127,7 +127,7 @@ rx=x./2.^(octave-1-extrema(1:4:end));
 %eliminate the point with low contrast or poorly localised on an edge
 % x:|,y:-- x is for vertial and y is for horizontal
 % value comes from the paper.
-tic
+%tic
 threshold=0.1;
 r=10;
 extr_volume=length(extrema)/4;
@@ -195,13 +195,13 @@ subplot(2,2,4);
 imshow(origin)
 hold on
 plot(ry,rx,'b+');
-toc
+%toc
 
 
 
 
 %% Orientation Assignment(Multiple orientations assignment)
-tic
+%tic
 kpori=zeros(1,36*extr_volume);
 minor=zeros(1,36*extr_volume);
 f=1;
@@ -270,10 +270,10 @@ extrema=minor;
 idx= kpori==0;
 kpori(idx)=[];
 extr_volume=length(extrema)/4;
-toc
+%toc
 
 %% keypoint descriptor
-tic
+%tic
 d=4;% In David G. Lowe experiment,divide the area into 4*4.
 pixel=9;
 feature=zeros(d*d*8,extr_volume);
@@ -355,4 +355,4 @@ for i=1:extr_volume
 end
 index=find(sum(feature));
 feature=feature(:,index);
-toc
+%toc
