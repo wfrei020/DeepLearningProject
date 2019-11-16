@@ -17,10 +17,10 @@ load('weightData','Y','training_label');
 
 model = train(training_label', sparse(Y'));
 
-img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/03/772.jpg';
+img_path = '../../../src/datasets/15CategoryDataSet/completeSet/15-Scene/02/480.jpg';
 feature = SIFT_feature(img_path);
 dataT = feature;
-expected_label=4.*ones(1,size(feature,2));
+expected_label=3.*ones(1,size(feature,2));
 YH = SceneRecognition(dataT);
 %Y(:,1:10)
 disp('training labl size');

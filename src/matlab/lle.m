@@ -12,11 +12,11 @@
 function [M] = lle(X,K,d)
 
 [D,N] = size(X);
-fprintf(1,'LLE running on %d points in %d dimensions\n',N,D);
+%fprintf(1,'LLE running on %d points in %d dimensions\n',N,D);
 
 
 % STEP1: COMPUTE PAIRWISE DISTANCES & FIND NEIGHBORS 
-fprintf(1,'-->Finding %d nearest neighbours.\n',K);
+%fprintf(1,'-->Finding %d nearest neighbours.\n',K);
 
 X2 = sum(X.^2,1);
 distance = repmat(X2,N,1)+repmat(X2',1,N)-2*X'*X;
@@ -27,10 +27,10 @@ neighborhood = index(2:(1+K),:);
 
 
 % STEP2: SOLVE FOR RECONSTRUCTION WEIGHTS
-fprintf(1,'-->Solving for reconstruction weights.\n');
+%fprintf(1,'-->Solving for reconstruction weights.\n');
 
 if(K>D) 
-  fprintf(1,'   [note: K>D; regularization will be used]\n'); 
+ % fprintf(1,'   [note: K>D; regularization will be used]\n'); 
   tol=1e-3; % regularlizer in case constrained fits are ill conditioned
 else
   tol=0;
@@ -47,7 +47,7 @@ end;
 
 
 % STEP 3: COMPUTE EMBEDDING FROM EIGENVECTS OF COST MATRIX M=(I-W)'(I-W)
-fprintf(1,'-->Computing embedding.\n');
+%fprintf(1,'-->Computing embedding.\n');
 
 M=eye(N,N); % use a sparse matrix with storage for 4KN nonzero elements
 %M = sparse(1:N,1:N,ones(1,N),N,N,4*K*N); 
@@ -68,7 +68,7 @@ options.disp = 0; options.isreal = 1; options.issym = 1;
 Y = Y(:,2:d+1)'*sqrt(N); % bottom evect is [1,1,1,1...] with eval 0
 
 
-fprintf(1,'Done.\n');
+%fprintf(1,'Done.\n');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -49,7 +49,7 @@ function K=calckernel(options,X1,X2);
 %  Vikas Sindhwani (vikass@cs.uchicago.edu) 
 %
 
-  tic;
+ % tic;
 
 
 kernel_type=options.Kernel;
@@ -68,12 +68,12 @@ end
 if ~isfield(options,'PointCloud') 
     %% so we dont intend to deform the kernel
      
-    fprintf(1, 'Computing %s Kernel', kernel_type);
+    %%fprintf(1, 'Computing %s Kernel', kernel_type);
 
     switch kernel_type
 
     case 'linear'
-        fprintf(1,'\n');
+     %   fprintf(1,'\n');
         if exist('X2','var') 
             K=X2*X1';  
         else
@@ -109,7 +109,7 @@ if ~isfield(options,'PointCloud')
     
 else % we intend to deform our kernel
      % this code can be speeded up later
-    disp('in correct else');    
+   % disp('in correct else');    
     opt.Kernel=options.Kernel;
     opt.KernelParam=options.KernelParam;
     X=options.PointCloud;
@@ -134,7 +134,7 @@ else % we intend to deform our kernel
            B=A;
            K1=calckernel(opt,X1);
         end
-        disp('Deforming the Kernel - correctly');	     
+      %  disp('Deforming the Kernel - correctly');	     
      
       
         K=(K1 - B'*((I+M*G)\M)*A);
@@ -148,4 +148,4 @@ else % we intend to deform our kernel
 
 end    
 
-disp(['Computation took ' num2str(toc) ' seconds.']);
+%disp(['Computation took ' num2str(toc) ' seconds.']);
